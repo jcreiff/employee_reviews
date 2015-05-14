@@ -69,13 +69,13 @@ class EmployeeReviewsTest < Minitest::Test
 
   def test_employees_can_be_given_raises_by_amount
     sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
-    sue.give_raise(10000)
+    sue.give_raise(amount: 10000)
     assert_equal 70000, sue.salary
   end
 
   def test_employees_can_be_given_raises_by_percent
     sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
-    sue.give_raise(0.1)
+    sue.give_raise(percent: 0.1)
     assert_equal 66000, sue.salary
   end
 
@@ -83,10 +83,10 @@ class EmployeeReviewsTest < Minitest::Test
     acct = Department.new("Accounting")
     jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
     acct.assign(jim)
-    assert acct.give_raises(30000)
+    assert acct.give_raises(amount: 30000)
   end
 
-  def test_departments_can_give_raises_to_employees
+  def test_departments_can_give_raises_to_employees_by_amount
     acct = Department.new("Accounting")
 
     jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
@@ -97,14 +97,32 @@ class EmployeeReviewsTest < Minitest::Test
     acct.assign(sue)
     acct.assign(mac)
 
-    acct.give_raises(30000)
+    acct.give_raises(amount: 30000)
     assert_equal 60000, jim.salary
     assert_equal 70000, sue.salary
     assert_equal 85000, mac.salary
     assert_equal 215000, acct.salary_total
   end
 
-  def test_only_good_employees_get_raises
+  def test_departments_can_give_raises_to_employees_by_percent
+    acct = Department.new("Accounting")
+
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    mac = Employee.new("Mac", "mac@mac.us", "123-456-7890", 75000)
+
+    acct.assign(jim)
+    acct.assign(sue)
+    acct.assign(mac)
+
+    acct.give_raises(percent: 0.1)
+    assert_equal 55000, jim.salary
+    assert_equal 66000, sue.salary
+    assert_equal 82500, mac.salary
+    assert_equal 203500, acct.salary_total
+  end
+
+  def test_only_good_employees_get_raises_by_amount
     acct = Department.new("Accounting")
 
     jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
@@ -116,10 +134,29 @@ class EmployeeReviewsTest < Minitest::Test
     acct.assign(mac)
 
     jim.satisfactory = false
-    acct.give_raises(30000)
+    acct.give_raises(amount: 30000)
 
     assert_equal 50000, jim.salary
     assert_equal 75000, sue.salary
     assert_equal 90000, mac.salary
+  end
+
+  def test_only_good_employees_get_raises_by_percent
+    acct = Department.new("Accounting")
+
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    mac = Employee.new("Mac", "mac@mac.us", "123-456-7890", 75000)
+
+    acct.assign(jim)
+    acct.assign(sue)
+    acct.assign(mac)
+
+    jim.satisfactory = false
+    acct.give_raises(percent: 0.1)
+
+    assert_equal 50000, jim.salary
+    assert_equal 66000, sue.salary
+    assert_equal 82500, mac.salary
   end
 end

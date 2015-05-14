@@ -24,10 +24,15 @@ class Department
     salaries.reduce {|t, s| t+s}
   end
 
-  def give_raises(amount)
+  def give_raises(amount: 0, percent: 1)
     the_worthy = @employees.select {|e| e.satisfactory}
-    each_raise = amount/the_worthy.length
-    the_worthy.each {|e| e.give_raise(each_raise)}
+    if amount > 0
+      each_raise = amount/the_worthy.length
+      the_worthy.each {|e| e.give_raise(amount: each_raise)}
+    else
+      each_raise = percent
+      the_worthy.each {|e| e.give_raise(percent: each_raise)}
+    end
   end
 
 end

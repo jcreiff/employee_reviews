@@ -16,7 +16,7 @@ class Employee
     @reviews << review
   end
 
-  def give_raise(amt_or_pct)
-    amt_or_pct > 1? @salary += amt_or_pct : @salary += @salary * amt_or_pct
+  def give_raise(amount: 0, percent: 1)
+    amount > 0? @salary += amount : @salary += @salary * percent
   end
 end
