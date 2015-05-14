@@ -47,4 +47,11 @@ class EmployeeReviewsTest < Minitest::Test
     review = "Jim needs serious help. He can barely read."
     assert jim.add_review(review)
   end
+
+  def test_can_see_employee_reviews
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    review = "Jim needs serious help. He can barely read."
+    jim.add_review(review)
+    assert_equal [review], jim.reviews
+  end
 end
