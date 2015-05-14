@@ -6,7 +6,7 @@ class Employee
     @name = name
     @email = email
     @phone_number = phone_number
-    @salary = salary
+    @salary = salary.to_f
   end
 
 end
