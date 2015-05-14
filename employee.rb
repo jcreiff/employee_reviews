@@ -7,12 +7,16 @@ class Employee
     @name = name
     @email = email
     @phone_number = phone_number
-    @salary = salary.to_f
+    @salary = salary
     @reviews = []
     @satisfactory = true
   end
 
   def add_review(review)
     @reviews << review
+  end
+
+  def give_raise(amt_or_pct)
+    amt_or_pct > 1? @salary += amt_or_pct : @salary += @salary * amt_or_pct
   end
 end

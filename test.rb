@@ -66,4 +66,17 @@ class EmployeeReviewsTest < Minitest::Test
     jim.satisfactory = false
     assert_equal false, jim.satisfactory
   end
+
+  def test_employees_can_be_given_raises_by_amount
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    sue.give_raise(10000)
+    assert_equal 70000, sue.salary
+  end
+
+  def test_employees_can_be_given_raises_by_percent
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    sue.give_raise(0.1)
+    assert_equal 66000, sue.salary
+  end
+
 end
