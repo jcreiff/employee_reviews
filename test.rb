@@ -79,4 +79,29 @@ class EmployeeReviewsTest < Minitest::Test
     assert_equal 66000, sue.salary
   end
 
+  def test_departments_can_give_raises
+    acct = Department.new("Accounting")
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    acct.assign(jim)
+    assert acct.give_raises(30000)
+  end
+
+  def test_departments_can_give_raises_to_employees
+    acct = Department.new("Accounting")
+
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    mac = Employee.new("Mac", "mac@mac.us", "123-456-7890", 75000)
+
+    acct.assign(jim)
+    acct.assign(sue)
+    acct.assign(mac)
+
+    acct.give_raises(30000)
+    assert_equal 60000, jim.salary
+    assert_equal 70000, sue.salary
+    assert_equal 85000, mac.salary
+    assert_equal 215000, acct.salary_total
+  end
+
 end

@@ -24,4 +24,10 @@ class Department
     salaries.reduce {|t, s| t+s}
   end
 
+  def give_raises(amount)
+    shares = @employees.length
+    each_raise = amount/shares
+    @employees.each {|e| e.give_raise(each_raise)}
+  end
+
 end
