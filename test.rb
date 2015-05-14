@@ -105,6 +105,7 @@ class EmployeeReviewsTest < Minitest::Test
   end
 
   def test_departments_can_give_raises_to_employees_by_percent
+    #realized after the fact that this wasn't necessary. oh well.
     acct = Department.new("Accounting")
 
     jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
@@ -159,4 +160,39 @@ class EmployeeReviewsTest < Minitest::Test
     assert_equal 66000, sue.salary
     assert_equal 82500, mac.salary
   end
+
+  def test_all_parts_work_together
+    acct = Department.new("Accounting")
+
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    mac = Employee.new("Mac", "mac@mac.us", "123-456-7890", 75000)
+
+    acct.assign(jim)
+    acct.assign(sue)
+    acct.assign(mac)
+
+    sue.give_raise(percent: 0.1)
+
+    review = "Jim needs serious help. He can barely read."
+    jim.add_review(review)
+
+    jim.satisfactory = false
+    acct.give_raises(amount: 10000)
+
+    assert_equal "Accounting", acct.name
+    assert_equal "Sue", sue.name
+    assert_equal "jim@jim.com", jim.email
+    assert_equal "123-456-7890", mac.phone_number
+    assert_equal ["Jim", "Sue", "Mac"], acct.employee_names
+    assert_equal ["Jim needs serious help. He can barely read."], jim.reviews
+    assert_equal false, jim.satisfactory
+    assert_equal true, mac.satisfactory
+    assert_equal 50000, jim.salary
+    assert_equal 71000, sue.salary
+    assert_equal 80000, mac.salary
+    assert_equal 201000, acct.salary_total
+
+  end
+
 end
