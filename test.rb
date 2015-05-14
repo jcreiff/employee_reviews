@@ -54,4 +54,16 @@ class EmployeeReviewsTest < Minitest::Test
     jim.add_review(review)
     assert_equal [review], jim.reviews
   end
+
+  def test_employees_have_satisfactory_rating
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    assert jim.satisfactory
+  end
+
+  def test_employee_satisfactory_rating_can_be_changed
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    assert_equal true, jim.satisfactory
+    jim.satisfactory = false
+    assert_equal false, jim.satisfactory
+  end
 end
