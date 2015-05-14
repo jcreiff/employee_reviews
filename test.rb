@@ -19,4 +19,17 @@ class EmployeeReviewsTest < Minitest::Test
     assert_equal 50000, jim.salary
   end
 
+  def test_departments_can_have_employees
+    acct = Department.new("Accounting")
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    assert acct.assign(jim)
+  end
+
+  def test_employees_can_be_added_to_departments
+    acct = Department.new("Accounting")
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    acct.assign(jim)
+    assert_equal [jim], acct.employees
+    assert_equal ["Jim"], acct.employee_names
+  end
 end
