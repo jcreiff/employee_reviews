@@ -41,4 +41,10 @@ class EmployeeReviewsTest < Minitest::Test
     acct.assign(sue)
     assert_equal 110000, acct.salary_total
   end
+
+  def test_employees_can_get_reviewed
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    review = "Jim needs serious help. He can barely read."
+    assert jim.add_review(review)
+  end
 end
