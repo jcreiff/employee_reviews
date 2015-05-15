@@ -16,7 +16,7 @@ class Employee
     @reviews << review
   end
 
-  def assess_review(review)
+  def assess_review(review=@reviews.to_s)
     good = scan_positive(review)
     bad = scan_negative(review)
 
@@ -56,7 +56,7 @@ class Employee
     /\sconsisten\w*/, /\seffective\w*/, /\ssatisf\w+/, /\simpress\w*/,
     /willing\sto\shelp/, /great\w*/, /enjoy\w*/, /devote\w?/, /\sbig/,
     /\sbig-?time/, /huge/, /amazing/, /!/, /super\w*/, /wonderful.?.?/,
-    /\stalent\w*/, /awesome/i]
+    /\stalent\w*/, /awesome/i, /fantastic/, /fabulous/]
 
     positive_matches = []
     positive_keywords.each do |regex|

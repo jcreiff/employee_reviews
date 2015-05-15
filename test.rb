@@ -338,4 +338,57 @@ class EmployeeReviewsTest < Minitest::Test
     assert_equal true, sue.satisfactory
 
   end
+
+  def test_one_more_test_with_different_reviews
+    acct = Department.new("Accounting")
+
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    mac = Employee.new("Mac", "mac@mac.com", "123-456-7890", 75000)
+    ann = Employee.new("Ann", "ann@ann.com", "111-222-3333", 55000)
+
+    acct.assign(jim)
+    acct.assign(sue)
+    acct.assign(mac)
+    acct.assign(ann)
+
+    mac_review = "Mac is a huge asset to SciMed and is a pleasure to work with.
+    He quickly knocks out tasks assigned to him, implements code that rarely
+    needs to be revisited, and is always willing to help others despite his heavy
+    workload.  When Mac leaves on vacation, everyone wishes he didn't have to go
+    Last year, the only concerns with Mac performance were around ownership.
+    In the past twelve months, he has successfully taken full ownership of both
+    Acme and Bricks, Inc.  Aside from some false starts with estimates on Acme,
+    clients are happy with his work and responsiveness, which is everything that
+    his managers could ask for."
+    mac.add_review(mac_review)
+
+    ann_review = "Thus far, there have been two concerns over Ann's performance,
+    and both have been discussed with her in internal meetings.  First, in some
+    cases, Ann takes longer to complete tasks than would normally be expected.
+    This most commonly manifests during development on existing applications,
+    but can sometimes occur during development on new projects, often during
+    tasks shared with Andrew.  In order to accommodate for these preferences,
+    Ann has been putting more time into fewer projects, which has gone well.
+    Second, while in conversation, Ann has a tendency to interrupt, talk over
+    others, and increase her volume when in disagreement.  In client meetings,
+    she also can dwell on potential issues even if the client or other attendees
+    have clearly ruled the issue out, and can sometimes get off topic."
+    ann.add_review(ann_review)
+
+    ann.assess_review #added a default to make argument @reviews
+    mac.assess_review
+
+    acct.give_raises(10000) do |e|
+      e.salary < 65000
+    end
+
+    assert_equal false, ann.satisfactory
+    assert_equal 55000, jim.salary #Jim finally gets a raise
+    assert_equal 65000, sue.salary #A boy named Sue?
+    assert_equal 75000, mac.salary #Mac hates the block. He can get over it.
+    assert_equal 55000, ann.salary #Do better, Ann.  Just do better.
+
+  end
+
 end
