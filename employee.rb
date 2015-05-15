@@ -28,7 +28,7 @@ class Employee
     amount < 1?  @salary += @salary * percent : @salary += amount
   end
 
-  def read_review(review)
+  def scan_negative(review)
     negative_keywords = [/difficult?\w/i, /confus?\w+/i, /negative?\w+/i,
       /s?lack?\w+/, /adequate?\w+/i, /\slimit?\w+/, /fault?\w+/, /not/,
       /needs\sto\simprove?\w+/, /room\sfor\simprove?\w+/, /could\simprove?\w+/,
@@ -43,5 +43,8 @@ class Employee
       negative_matches << match if match != []
     end
     negative_matches.flatten
+  end
+
+  def scan_positive(review)
   end
 end

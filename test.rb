@@ -256,7 +256,7 @@ class EmployeeReviewsTest < Minitest::Test
     assert_equal false, jim.satisfactory
   end
 
-  def test_regexps_are_finding_keywords
+  def test_regexps_are_finding_negative_keywords
     jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
     review = "Jim is a very positive person and encourages those around him,
     but he has not done well technically this year. There are two areas in
@@ -275,8 +275,8 @@ class EmployeeReviewsTest < Minitest::Test
     discussing further."
     blank = "No words here"
 
-    assert_empty jim.read_review(blank)
-    refute_empty jim.read_review(review)
+    assert_empty jim.scan_negative(blank)
+    refute_empty jim.scan_negative(review)
 
   end
 end
