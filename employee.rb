@@ -29,22 +29,35 @@ class Employee
   end
 
   def scan_negative(review)
-    negative_keywords = [/difficult?\w/i, /confus?\w+/i, /negative?\w+/i,
-      /s?lack?\w+/, /adequate?\w+/i, /\slimit?\w+/, /fault?\w+/, /not/,
-      /needs\sto\simprove?\w+/, /room\sfor\simprove?\w+/, /could\simprove?\w+/,
-      /\sless/, /below/, /needs?/, /poor?\w+/, /bad?\w+/i, /discuss?\w+/,
-      /unhappy/, /mediocre/i, /average/i, /concern?\w+/, /First/, /Second/,
-      /tendenc?\w+/, /interrupt?\w+/i, /disrespect?\w+/, /dwell?\w+/, /issue?\w+/,
-      /off-?\s?topic/, /though/]
+    negative_keywords = [/difficult?\w+/, /confus?\w+/i, /negative?\w+/i,
+      /s?lack?\w+/, /adequate.?.?/i, /\slimit?\w+/, /fault.?/, /not/,
+      /needs\sto\simprove/, /room\sfor\simprove/, /could\simprove/,
+      /\sless/, /below/, /needs?/, /poor.?.?/, /bad\w+\w+/i, /discuss?\w+/,
+      /unhappy/, /mediocre/i, /average/i, /concern.?.?.?/, /First/, /Second/,
+      /tendenc\w+/, /interrupt.?.?.?/i, /disrespect.?.?.?/, /dwell.?.?.?/,
+      /issues?/, /off-?\s?topic/, /though/]
 
     negative_matches = []
     negative_keywords.each do |regex|
       match = review.scan(regex)
       negative_matches << match if match != []
     end
-    negative_matches.flatten
+    p negative_matches.flatten
   end
 
   def scan_positive(review)
+    positive_keywords = [/assets?/, /\spleasure/, /quick\w*/, /always/,
+    /\ssuccess\w*/, /\shappy/, /\sperfect\w*/, /incredibl\w/, /solid\w*/,
+    /\sconsisten\w*/, /\seffective\w*/, /\ssatisf\w+/, /\simpress\w*/,
+    /willing\sto\shelp/, /great\w*/, /enjoy\w*/, /devote\w?/, /\sbig/,
+    /\sbig-?time/, /huge/, /amazing/, /!/, /super\w*/, /wonderful.?.?/,
+    /\stalent\w*/]
+
+    positive_matches = []
+    positive_keywords.each do |regex|
+      match = review.scan(regex)
+      positive_matches << match if match != []
+    end
+    p positive_matches.flatten
   end
 end

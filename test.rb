@@ -277,6 +277,23 @@ class EmployeeReviewsTest < Minitest::Test
 
     assert_empty jim.scan_negative(blank)
     refute_empty jim.scan_negative(review)
+  end
 
+  def test_regexps_are_finding_negative_keywords
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    review = "Sue has been an incredibly consistent and effective developer.
+    Clients are always satisfied with her work, developers are impressed with
+    her productivity, and she's more than willing to help others even when she
+    has a substantial workload of her own.  She is a great asset to Awesome
+    Company, and everyone enjoys working with her.  During the past year, she
+    has largely been devoted to work with the Cement Company, and she is the
+    perfect woman for the job.  We know that work on a single project can become
+    monotonous, however, so over the next few months, we hope to spread some of
+    the Cement Company work to others.  This will also allow Sue to pair more
+    with others and spread her effectiveness to other projects."
+    blank = "No words here"
+
+    assert_empty sue.scan_positive(blank)
+    refute_empty sue.scan_positive(review)
   end
 end
