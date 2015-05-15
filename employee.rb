@@ -17,10 +17,15 @@ class Employee
   end
 
   def assess_review(review)
-    if review
+    good = scan_positive(review)
+    bad = scan_negative(review)
+
+    if good.count > bad.count
       @satisfactory = true
+      return true
     else
       @satisfactory = false
+      return false
     end
   end
 
@@ -42,7 +47,7 @@ class Employee
       match = review.scan(regex)
       negative_matches << match if match != []
     end
-    p negative_matches.flatten
+    negative_matches.flatten
   end
 
   def scan_positive(review)
@@ -51,13 +56,13 @@ class Employee
     /\sconsisten\w*/, /\seffective\w*/, /\ssatisf\w+/, /\simpress\w*/,
     /willing\sto\shelp/, /great\w*/, /enjoy\w*/, /devote\w?/, /\sbig/,
     /\sbig-?time/, /huge/, /amazing/, /!/, /super\w*/, /wonderful.?.?/,
-    /\stalent\w*/]
+    /\stalent\w*/, /awesome/i]
 
     positive_matches = []
     positive_keywords.each do |regex|
       match = review.scan(regex)
       positive_matches << match if match != []
     end
-    p positive_matches.flatten
+    positive_matches.flatten
   end
 end
