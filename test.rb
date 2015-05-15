@@ -243,4 +243,17 @@ class EmployeeReviewsTest < Minitest::Test
     assert_equal 60000, ann.salary
   end
 
+  def test_can_read_employee_reviews
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    review = "Jim, seriously. What are you doing."
+    assert jim.read_review(review)
+  end
+
+  def test_reading_review_can_change_rating
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    review = false
+    jim.read_review(review)
+    assert_equal false, jim.satisfactory
+  end
+
 end

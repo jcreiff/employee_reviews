@@ -16,6 +16,14 @@ class Employee
     @reviews << review
   end
 
+  def read_review(review)
+    if review
+      @satisfactory = true
+    else
+      @satisfactory = false
+    end
+  end
+
   def give_raise(amount: 0, percent: 1)
     amount < 1?  @salary += @salary * percent : @salary += amount
   end
