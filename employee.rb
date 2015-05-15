@@ -17,6 +17,6 @@ class Employee
   end
 
   def give_raise(amount: 0, percent: 1)
-    amount > 0? @salary += amount : @salary += @salary * percent
+    amount < 1?  @salary += @salary * percent : @salary += amount
   end
 end

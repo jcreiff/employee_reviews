@@ -24,14 +24,30 @@ class Department
     salaries.reduce {|t, s| t+s}
   end
 
-  def give_raises(amount: 0, percent: 1)
-    the_worthy = @employees.select {|e| e.satisfactory}
-    if amount > 0
-      each_raise = amount/the_worthy.length
-      the_worthy.each {|e| e.give_raise(amount: each_raise)}
+  def give_raises(amount)
+    fits_block = []
+    if block_given?
+      @employees.each do |e|
+        if yield(e)
+          fits_block << e
+        end
+      end
+      eligible = fits_block.select {|e| e.satisfactory}
+      distribute_raises(eligible, amount)
     else
-      each_raise = percent
-      the_worthy.each {|e| e.give_raise(percent: each_raise)}
+      eligible = @employees.select {|e| e.satisfactory}
+      distribute_raises(eligible, amount)
+    end
+
+  end
+
+  def distribute_raises(array=[], amount)
+    if amount < 1
+      each_raise = amount
+      array.each {|e| e.give_raise(percent: each_raise)}
+    else
+      each_raise = amount/array.length
+      array.each {|e| e.give_raise(amount: each_raise)}
     end
   end
 
