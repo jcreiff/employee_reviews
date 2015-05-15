@@ -219,4 +219,28 @@ class EmployeeReviewsTest < Minitest::Test
     assert_equal 60000, ann.salary
   end
 
+  def test_another_block_because_im_excited_that_it_works
+    acct = Department.new("Accounting")
+
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    sue = Employee.new("Sue", "sue@sue.net", "911-911-9111", 60000)
+    mac = Employee.new("Mac", "mac@mac.com", "123-456-7890", 75000)
+    ann = Employee.new("Ann", "ann@ann.com", "111-222-3333", 55000)
+
+    acct.assign(jim)
+    acct.assign(sue)
+    acct.assign(mac)
+    acct.assign(ann)
+
+    jim.satisfactory = false
+    acct.give_raises(10000) do |e|
+      e.email.include?(".com")
+    end
+
+    assert_equal 50000, jim.salary
+    assert_equal 60000, sue.salary
+    assert_equal 80000, mac.salary
+    assert_equal 60000, ann.salary
+  end
+
 end
