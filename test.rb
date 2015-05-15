@@ -246,14 +246,37 @@ class EmployeeReviewsTest < Minitest::Test
   def test_can_read_employee_reviews
     jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
     review = "Jim, seriously. What are you doing."
-    assert jim.read_review(review)
+    assert jim.assess_review(review)
   end
 
   def test_reading_review_can_change_rating
     jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
     review = false
-    jim.read_review(review)
+    jim.assess_review(review)
     assert_equal false, jim.satisfactory
   end
 
+  def test_regexps_are_finding_keywords
+    jim = Employee.new("Jim", "jim@jim.com", "919-999-9999", 50000)
+    review = "Jim is a very positive person and encourages those around him,
+    but he has not done well technically this year. There are two areas in
+    which Jim has room for improvement.  First, when communicating verbally
+    (and sometimes in writing), he has a tendency to use more words than are
+    required. This conversational style does put people at ease, which is
+    valuable, but it often makes the meaning difficult to isolate, and can cause
+    confusion. Second, when discussing new requirements with project managers,
+    less of the information is retained by Jim long-term than is expected. This
+    has a few negative consequences: 1) time is spent developing features that
+    are not useful and need to be re-run, 2) bugs are introduced in the code and
+    not caught because the tests lack the same information, and 3) clients are
+    told that certain features are complete when they are inadequate.  This
+    communication limitation could be the fault of project management, but given
+    that other developers appear to retain more information, this is worth
+    discussing further."
+    blank = "No words here"
+
+    assert_empty jim.read_review(blank)
+    refute_empty jim.read_review(review)
+
+  end
 end
