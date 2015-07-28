@@ -22,3 +22,4 @@ All your employee info, in one place.  Initialize each employee with a `name`, `
 3. Want to single out a special employee for a raise?  The `give_raise` feature does just that--just feed it a `percent:` or an `amount:`
 
 
+######*Assignment from Week 2 of The Iron Yard's Ruby on Rails course (Durham)*
